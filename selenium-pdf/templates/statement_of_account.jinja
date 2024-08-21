@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Statement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 text-gray-900">
+    <div class="max-w-4xl mx-auto bg-white p-8 shadow-lg">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold">{{ bank_name }}</h1>
+        <h2 class="text-lg text-gray-600">Statement of Account</h2>
+      </div>
+
+      <div class="mb-8">
+        <p><strong>Account Holder:</strong> {{ account_holder }}</p>
+        <p><strong>Account Number:</strong> {{ account_number }}</p>
+        <p>
+          <strong>Statement Period:</strong> {{ statement_period_start }} -
+          {{ statement_period_end }}
+        </p>
+      </div>
+
+      <table
+        class="w-full table-auto mb-8 border-collapse border border-gray-300"
+      >
+        <thead>
+          <tr>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">Date</th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">
+              Description
+            </th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">Amount</th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">
+              Balance
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">
+              {{ transaction.date }}
+            </td>
+            <td class="px-4 py-2 border border-gray-300">
+              {{ transaction.description }}
+            </td>
+            <td class="px-4 py-2 border border-gray-300">
+              {{ transaction.amount }}
+            </td>
+            <td class="px-4 py-2 border border-gray-300">
+              {{ transaction.balance }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="text-center mb-8">
+        <h3 class="text-lg font-semibold mb-4">Spending Habits</h3>
+        <div class="flex justify-center">
+          <canvas id="spendingChart" width="200" height="200"></canvas>
+        </div>
+      </div>
+
+      <div class="text-center text-gray-600 text-sm">
+        <p>{{ bank_name }} &copy; {{ current_year }}. All Rights Reserved.</p>
+        <p>
+          This is a computer-generated document and does not require a
+          signature.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      var ctx = document.getElementById('spendingChart').getContext('2d');
+      var spendingChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: {{ spending_labels | tojson }},
+              datasets: [{
+                  label: 'Spending Habits',
+                  data: {{ spending_data | tojson }},
+                  backgroundColor: [
+                      '#FF6384',
+                      '#36A2EB',
+                      '#FFCE56',
+                      '#4BC0C0',
+                      '#9966FF'
+                  ],
+                  hoverOffset: 4
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                  }
+              },
+              animation: {
+                onComplete: function () {
+                    // Add the new element when the animation completes
+                    var messageDiv = document.createElement("div");
+                    messageDiv.setAttribute("id", "pageready");
+                    messageDiv.classList.add('hidden');
+                    document.body.appendChild(messageDiv);
+                }
+            }
+          }
+      });
+    </script>
+  </body>
+</html>

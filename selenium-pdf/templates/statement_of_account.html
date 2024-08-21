@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Statement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 text-gray-900">
+    <div class="max-w-4xl mx-auto bg-white p-8 shadow-lg">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold">Bank Name</h1>
+        <h2 class="text-lg text-gray-600">Statement of Account</h2>
+      </div>
+
+      <div class="mb-8">
+        <p><strong>Account Holder:</strong> John Doe</p>
+        <p><strong>Account Number:</strong> 1234567890</p>
+        <p><strong>Statement Period:</strong> 01/01/2024 - 31/01/2024</p>
+      </div>
+
+      <table
+        class="w-full table-auto mb-8 border-collapse border border-gray-300"
+      >
+        <thead>
+          <tr>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">Date</th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">
+              Description
+            </th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">Amount</th>
+            <th class="px-4 py-2 border border-gray-300 bg-gray-100">
+              Balance
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">01/01/2024</td>
+            <td class="px-4 py-2 border border-gray-300">Deposit</td>
+            <td class="px-4 py-2 border border-gray-300">$1,000.00</td>
+            <td class="px-4 py-2 border border-gray-300">$5,000.00</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">05/01/2024</td>
+            <td class="px-4 py-2 border border-gray-300">Grocery Store</td>
+            <td class="px-4 py-2 border border-gray-300">-$150.00</td>
+            <td class="px-4 py-2 border border-gray-300">$4,850.00</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">10/01/2024</td>
+            <td class="px-4 py-2 border border-gray-300">Restaurant</td>
+            <td class="px-4 py-2 border border-gray-300">-$60.00</td>
+            <td class="px-4 py-2 border border-gray-300">$4,790.00</td>
+          </tr>
+          <!-- Additional transactions go here -->
+        </tbody>
+      </table>
+
+      <div class="text-center mb-8">
+        <h3 class="text-lg font-semibold mb-4">Spending Habits</h3>
+        <div class="flex justify-center">
+          <canvas id="spendingChart" width="200" height="200"></canvas>
+        </div>
+      </div>
+
+      <div class="text-center text-gray-600 text-sm">
+        <p>Bank Name &copy; 2024. All Rights Reserved.</p>
+        <p>
+          This is a computer-generated document and does not require a
+          signature.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      var ctx = document.getElementById("spendingChart").getContext("2d");
+      var spendingChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: [
+            "Groceries",
+            "Dining",
+            "Utilities",
+            "Entertainment",
+            "Others",
+          ],
+          datasets: [
+            {
+              label: "Spending Habits",
+              data: [150, 60, 200, 100, 90], // Example data, replace with actual values
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#4BC0C0",
+                "#9966FF",
+              ],
+              hoverOffset: 4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
